@@ -1,36 +1,54 @@
 "use client";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-
-
+import { useMutation } from "@apollo/client";
+import { ADD_GOALS } from "../app/api/graphql/queries/goals"
 const QNASection = (props) => {
   const { user } = props;
 
   const [goals, setGoals] = useState([{ id: 0, value: "" }]);
   const [label, setLabel] = useState("");
   const [date, setDate] = useState('');
+  const [addGoals] = useMutation(ADD_GOALS);
+
 
   const router=useRouter();
   const handleSubmit = async (e) => {
     e.preventDefault();
+    // try {
+    //   const response = await fetch("/api/addgoals", {
+    //     method: "POST", 
+    //     headers: {
+    //       "Content-Type": "application/json", // Set the content type to JSON
+    //     },
+    //     body: JSON.stringify({
+    //       userId: user.id,
+    //       myGoals: goals,
+    //       myLabel: label,
+    //       myDate: date,
+    //     }),
+    //   });router
+    //   if (response.ok) {
+    //     router.push("/dashboard");
+    //   }
+    // }
+   
     try {
-      const response = await fetch("/api/addgoals", {
-        method: "POST", 
-        headers: {
-          "Content-Type": "application/json", // Set the content type to JSON
-        },
-        body: JSON.stringify({
+      const { data } = await addGoals({
+        variables: {
           userId: user.id,
           myGoals: goals,
           myLabel: label,
           myDate: date,
-        }),
-      });router
-      if (response.ok) {
+        },
+      });
+
+      if (data.addGoals) {
+        // Handle success, maybe navigate to a different page
         router.push("/dashboard");
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
@@ -63,7 +81,6 @@ const QNASection = (props) => {
               id={`goal-${goal.id}`}
               name={`goal-${goal.id}`}
               className="mt-1 p-2 w-full border rounded-md focus:ring focus:ring-indigo-200 focus:border-indigo-300"
-              required
               value={goal.value}
               onChange={(e) => handleGoalChange(goal.id, e.target.value)}
             />

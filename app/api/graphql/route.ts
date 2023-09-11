@@ -3,24 +3,14 @@ import { ApolloServer } from "@apollo/server";
 import { gql } from "graphql-tag";
 import { NextRequest } from "next/server";
 import { goals } from "./goals";
+import { connectToDB } from "../../../utils/database";
+import Goals from "../../../models/goals";
+import typeDefs from "./types/goals";
+import resolvers from "./resolvers/goals";
 
 const server = new ApolloServer({
-    typeDefs: gql`
-        type Query {
-            ${goals.queries}
-        }
-        type Mutation {
-           ${goals.mutations}
-        }
-    `,
-    resolvers: {
-        Query: {
-            ...goals.resolvers.queries
-        },
-        Mutation: {
-            ...goals.resolvers.mutations
-        }
-    }
+    typeDefs,
+    resolvers
 });
 
 const handler = startServerAndCreateNextHandler<NextRequest>(server);

@@ -1,3 +1,6 @@
 export const mutations=`#graphql
-    addGoals:String
+type Mutation {
+    addGoals(userId:ID!,myGoals:String,myLabel:String,myDate:String): Boolean
+  }
+
 `
