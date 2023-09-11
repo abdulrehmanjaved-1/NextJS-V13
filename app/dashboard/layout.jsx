@@ -1,5 +1,5 @@
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
-import Nav from "@/components/Nav";
+import Nav from "../../components/Nav"
 
 
 function Layout({ children }) {

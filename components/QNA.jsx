@@ -13,10 +13,9 @@ const QNASection = (props) => {
   const router=useRouter();
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("hhh",user.id)
     try {
       const response = await fetch("/api/addgoals", {
-        method: "POST",
+        method: "POST", 
         headers: {
           "Content-Type": "application/json", // Set the content type to JSON
         },

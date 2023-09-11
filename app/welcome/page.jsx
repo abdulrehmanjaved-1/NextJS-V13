@@ -1,7 +1,5 @@
-
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
-import QNASection from "@/components/QNA";
-
+import QNASection from "../../components/QNA";
 
 
 const welcome = () => {
